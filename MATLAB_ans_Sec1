@@ -1,0 +1,31 @@
+%Input:
+formatSpec = '%C%f%f%f%f%C%C';
+
+data = readtable('prestige.csv','Delimiter',',','Format',formatSpec); %load into table
+
+%split data
+y = table2array(data(:,5));
+X = table2array(data(:,2:4));
+[num_data,tmp] = size(X);
+X = cat(2, ones(num_data,1),X); %adds an intercept
+
+%compute the estimator
+
+betahat = inv(X'*X)*X'*y;
+
+% Fill in the blanks
+ep=y-X*betahat;
+betacov = (sum(ep.^2)/(length((ep-1))))*(X'*X)^(-1);
+sqrt(diag(betacov))
+
+%Output:
+    3.1749
+    0.3810
+    0.0003
+    0.0298
+    
+Compared to the results from R (from function lm):
+x             xeducation  xincome      xwomen 
+3.2390886463 0.3887012613 0.0002777812 0.0304070576 
+
+The results are similar.
