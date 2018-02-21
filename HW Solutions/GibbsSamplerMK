@@ -10,13 +10,13 @@ data=normrnd(mean,stddev,[observations,1]);
 % [mu1,omg1]=sampler1(dataden);
 [mu2,omg2]=sampler2(dataden);
 
-figure(1)
-subplot(1,2,1)
-histogram(mu1)
-title('\mu_1')
-subplot(1,2,2)
-histogram(omg1)
-title('\omega_1')
+% figure(1)
+% subplot(1,2,1)
+% histogram(mu1)
+% title('\mu_1')
+% subplot(1,2,2)
+% histogram(omg1)
+% title('\omega_1')
 
 figure(2)
 subplot(1,2,1)
