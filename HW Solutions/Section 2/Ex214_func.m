@@ -1,4 +1,6 @@
 function [beta,omega,lambda,paramo,L,X] = Ex214_func(data,num_samples,burnin,a,b,tau)
+%Morgan  Kelley
+%SDS 383D
 if nargin==1 %set parameters
     num_samples = 3000;
     burnin=100;
@@ -23,7 +25,7 @@ for i=2:(num_samples+burnin)
     Sigma=Prec^-1;
     mu=Sigma*(X'*Lambda*y);
     omega=gamrnd(a+(n+d)/2,(b+(1/2)*(y'*Lambda*y-mu'*Prec*mu))^-1);
-    beta=(mvnrnd(mu,((Sigma*(omega)^-1)+(Sigma*(omega)^-1).')/2))'; %Second term is averaged to get rid of rounding errors
+    beta=(mvnrnd(mu,((Sigma*(omega)^-1)+(Sigma*(omega)^-1).')/2))'; %Second term is averaged to get rid of rounding errors and ensure matrix is PD and symmetric
     lambda=gamrnd(tau+1/2,tau+(omega/2)*(y-X*beta).^2);
     %Record iteration results
     param(i,:)=[omega beta'];

@@ -1,16 +1,18 @@
 %% Run original file
-run Ex214main;
-load Ysubjvar.mat;
+run Ex214main; %Run file for 14 to modify results with mean
+load Ysubjvar.mat; %Load data formatted with each subject in own column
 %%
+%Both genders
 ysubj1=ysubj;
-
 [ypredn1,Mo1]=Ex215_func(ysubj1,Y1,ypred1,1,27);
 RMSEn1=sqrt(mean((Y1-ypredn1).^2));   
 
+%Male
 ysubj2=ysubj(:,1:16);
 [ypredn2,Mo2]=Ex215_func(ysubj2,Y2,ypred2,1,16);
 RMSEn2=sqrt(mean((Y2-ypredn2).^2));
 
+%Female
 ysubj3=ysubj(:,17:27);
 [ypredn3,Mo3]=Ex215_func(ysubj3,Y3,ypred3,1,11);
 RMSEn3=sqrt(mean((Y3-ypredn3).^2));

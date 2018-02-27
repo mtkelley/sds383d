@@ -18,13 +18,12 @@ Gv=[ones(GenderSplit,1); zeros(n-GenderSplit,1)];
 D1=[data(:,1) ones(length(data),1) data(:,2) Gv];
 Y1=data(:,1);
 
-[beta1,omega1,lambda1,param1,L1,X1]=Ex214_func(D1);
-ypred1=zeros(size(Y1));
+[beta1,omega1,lambda1,param1,L1,X1]=Ex214_func(D1); %Sampler
 betamean1=mean(param1(:,2:4),1);
 omegamean1=mean(param1(:,1),1);
 
-ypred1=X1*betamean1'+normrnd(0,omegamean1*lambda1);
-RMSE1=sqrt(mean((Y1-ypred1).^2));
+ypred1=X1*betamean1'+normrnd(0,omegamean1*lambda1); %Predicting Y
+RMSE1=sqrt(mean((Y1-ypred1).^2)); %Root mean squared error
 
 figure(1)
 subplot(4,3,1)

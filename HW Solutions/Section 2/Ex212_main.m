@@ -8,32 +8,31 @@ data=table2array(dental(1:108,2:3));
 y=data(:,1);
 X=data(:,2);
 n=length(data);
-lsfun=@(beta,xdata)xdata*beta;
+
 beta0=[0;0;0];
 %% Calculate number of males--GenderSplit
 Gender=table2array(dental(:,5));
-Gendernum=countcats(Gender);
+Gendernum=countcats(Gender); %Count males and females
 GenderSplit=Gendernum(2); %Number of males will be second--alphabetical
 
 %% Both genders together
-Gv=[ones(GenderSplit,1); zeros(n-GenderSplit,1)];
+Gv=[ones(GenderSplit,1); zeros(n-GenderSplit,1)]; %vector identifying gender
 D1=[data(:,1) ones(length(data),1) data(:,2) Gv]; %[y intercept age gender]
 Y1=data(:,1);
 
-[beta1,omega1,param1,X1]=Ex212_func(D1);
+[beta1,omega1,param1,X1]=Ex212_func(D1); %Sampler
 betamean1=mean(param1(:,2:4),1);
 omegamean1=mean(param1(:,1),1);
-ypred1=X1*betamean1'+normrnd(0,omegamean1);
-norm1=norm(ypred1-y);
 
 %Least Squares and Ridge
 betals1=(X1'*X1)\(X1'*y);
 betaRidge1=ridge(y,X1(:,2:3),0);
 
+ypred1=zeros(size(Y1));
 for i=1:length(Y1)
-ypred1(i)=X1(i,:)*betamean1'+normrnd(0,omegamean1);
+ypred1(i)=X1(i,:)*betamean1'+normrnd(0,omegamean1); %Y prediction
 end
-RMSE1=sqrt(mean((Y1-ypred1).^2));
+RMSE1=sqrt(mean((Y1-ypred1).^2)); %Calculate root mean squared error
     
 figure(1)
 subplot(4,3,1)
@@ -61,13 +60,12 @@ Y2=y(1:GenderSplit);
 [beta2,omega2,param2,X2]=Ex212_func(D2);
 betamean2=mean(param2(:,2:size(param2,2),1));
 omegamean2=mean(param2(:,1),1);
-ypred2=X2*betamean2'+normrnd(0,omegamean2);
 
+ypred2=zeros(size(Y2));
 for i=1:length(Y2)
 ypred2(i)=X2(i,:)*betamean2'+normrnd(0,omegamean2);
 end
 
-norm2=norm(ypred2-Y2);
 RMSE2=sqrt(mean((Y2-ypred2).^2));
 
 %Least Squares and Ridge
@@ -95,13 +93,12 @@ Y3=y(GenderSplit+1:length(data));
 [beta3,omega3,param3,X3]=Ex212_func(D3);
 betamean3=mean(param3(:,2:size(param3,2),1));
 omegamean3=mean(param3(:,1),1);
-ypred3=zeros(size(Y3));
 
+ypred3=zeros(size(Y3));
 for i=1:length(Y3)
 ypred3(i)=X3(i,:)*betamean3'+normrnd(0,omegamean3);
 end
 
-norm3=norm(ypred3-Y3);
 RMSE3=sqrt(mean((Y3-ypred3).^2));
 
 %Least Squares and Ridge
