@@ -1,7 +1,7 @@
 %Morgan Kelley
 %SDS 383D
 %Problem 3.2
-
+clear all
 load titanic.mat
 n=1312;
 %% Data processing
@@ -33,4 +33,4 @@ NA2=0;
  lambda=1;
  t=3;
  fun=@(beta)(Y-X*beta)'*(Y-X*beta)+lambda*(norm(beta)-t);
- x=fminsearch(fun,0);
+ betaR=fminsearch(fun,0);
