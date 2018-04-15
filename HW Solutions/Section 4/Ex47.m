@@ -1,12 +1,12 @@
 %Morgan Kelley
-%Exercise 4.6
+%Exercise 4.7
 clear all; close all; format compact;
 
 global N split;
 load faithful.mat;
 eruptions=table2array(faithful(:,1));
 waiting=table2array(faithful(:,2));
-N=length(waiting);
+N=10;
 split=N/2;
 tX=waiting(1:N);
 tY=eruptions(1:N);
@@ -16,7 +16,7 @@ tY=eruptions(1:N);
 kfcn = @(x,xp,theta) theta(1)*exp(-1/(2*theta(2))*pdist2(x,xp).^2)+theta(3)*eye(N,N);
 
 %Initial conditions
-theta0=[10,10,10];
+theta0=[.001,.001,.001];
 
 gprMdl = fitrgp(tX,tY,'KernelFunction',kfcn,'KernelParameters',theta0);
 thetasq=gprMdl.KernelInformation.KernelParameters;
