@@ -1,4 +1,4 @@
-function [mu,sigma2,omega,z,Pxi1,Pxi0] = Ex52Func(Ns,y,X,init)
+function [mu,sigma2,omega,z,Pxi1,Pxi0,s2,m] = Ex52Func(Ns,y,X,init)
 n=length(y);
 
 %Initialize parameter size
@@ -15,8 +15,8 @@ sumX=0;
 s2o=(1/sigmao^2+n0/sigmao^2)^(-1);
 mo=(muo/sigmao^2+(sumX)/sigmao^2)*2/(1/sigmao^2+n0/sigmao^2);
 mu(1,:)=normrnd(mo,s2o);
-omega(1)=1;gamrnd(a,b)*prod(normrnd(0,1/omegao));
-sigma2(1,:)=1;1/omega(1);
+omega(1)=1;
+sigma2(1,:)=1;
 
 Xsum0=zeros(Ns);
 Xsum1=zeros(Ns);
@@ -44,10 +44,10 @@ for iter=2:Ns
     Xcount=[Xsum0 Xsum1];
         
     for k=1:2
-        s2(iter,k)=(1/sigma2(iter-1,k)+Ncount(k)/sigma2(iter-1,k))^(-1);
-        m(iter,k)=(mu(iter-1,k)/sigma2(iter-1,k)+(Xcount(k))/sigma2(iter-1,k))*1/(1/sigma2(iter-1,k)+Ncount(k)/sigma2(iter-1,k));
-        mu(iter,k)=normrnd(m(iter,k),s2(iter,k));
-        sigma2(iter,k)=gamrnd(a,b)*prod(normrnd(mu(iter,k),sigma2(iter-1,k)));
+        s2(iter,k)=( (1/sigma2(iter-1,k)) + (Ncount(k)/sigma2(iter-1,k)) )^(-1);
+        m(iter,k)=( (mu(iter-1,k)/sigma2(iter-1,k)) + ((Xcount(k))/sigma2(iter-1,k)) )* 1/( (1/sigma2(iter-1,k)) + (Ncount(k)/sigma2(iter-1,k)) );
+        mu(iter,k)=abs(normrnd( m(iter,k), s2(iter,k) ));
+        sigma2(iter,k)=abs(gamrnd(a,b)*prod(normrnd(mu(iter,k),sigma2(iter-1,k)))^(-1));
     end
 end
 end
