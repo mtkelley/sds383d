@@ -29,7 +29,7 @@ for iter=2:Ns
         %sample zi
         Pxi1(iter,i)=normrnd(mu(iter-1,2),sigma2(iter-1));
         Pxi0(iter,i)=normrnd(mu(iter-1,1),sigma2(iter-1));
-        z(iter,i)=binornd(1,abs(Pxi1(iter,i)/(Pxi1(iter,i)+Pxi0(iter,i))));
+        z(iter,i)=binornd(1,abs(Pxi1(iter,i)/((Pxi1(iter,i)+Pxi0(iter,i)))));
         %Count number of z occurences in each category
         if (z(iter,i)==0)
             n0=n0+1;
