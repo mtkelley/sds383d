@@ -1,5 +1,5 @@
 %Morgan Kelley
-%Ex. 5.2
+%Ex. 5.5
 clear all; close all; clc;
 load restaurants.mat;
 
