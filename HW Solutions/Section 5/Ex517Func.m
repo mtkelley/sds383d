@@ -10,7 +10,7 @@ for k=1:K
     z=[z z2(k,:)];
 end
 
-alpha=1;
+alpha=1/K;
 Ncount=zeros(1,K);
 Xsum=zeros(D,K);
 for i=1:K
